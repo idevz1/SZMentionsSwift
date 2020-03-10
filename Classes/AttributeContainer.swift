@@ -24,4 +24,8 @@ internal extension Array where Element == AttributeContainer {
     var dictionary: [NSAttributedString.Key: Any] {
         return Dictionary(uniqueKeysWithValues: compactMap { ($0.name, $0.value) })
     }
+    var dictionaryary: [String: Any] {
+        return Dictionary(uniqueKeysWithValues: compactMap { ($0.name.rawValue, $0.value) })
+    }
+
 }

@@ -21,7 +21,7 @@ public class MentionListener: NSObject {
      */
     internal weak var delegate: UITextViewDelegate?
 
-     public weak var externalDelegate: UITextViewDelegate?
+    public weak var externalDelegate: UITextViewDelegate?
     /**
      @brief Whether or not we should add a space after the mention, default: false
      */
@@ -156,7 +156,7 @@ public class MentionListener: NSObject {
         self.hideMentions = hideMentions
         self.didHandleMentionOnReturn = didHandleMentionOnReturn
         self.showMentionsListWithString = showMentionsListWithString
-        self.mentionsTextView.typingAttributes = self.defaultTextAttributes.dictionary
+        self.mentionsTextView.typingAttributes = self.defaultTextAttributes.dictionaryary
         super.init()
         mentionsTextView.delegate = self
     }
@@ -170,7 +170,7 @@ extension MentionListener /* Public */ {
         mentions = []
 
         mentionsTextView.text = ""
-        mentionsTextView.typingAttributes = defaultTextAttributes.dictionary
+        mentionsTextView.typingAttributes = defaultTextAttributes.dictionaryary
     }
 
     /**
@@ -324,7 +324,7 @@ extension MentionListener /* Private */ {
                           selector: #selector(cooldownTimerFired(_:)), userInfo: nil,
                           repeats: false)
         cooldownTimer = timer
-        RunLoop.main.add(timer, forMode: RunLoop.Mode.default)
+        RunLoop.main.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
     }
 
     private func notifyOfTextViewChange(on textView: UITextView) {
@@ -342,7 +342,7 @@ extension MentionListener: UITextViewDelegate {
         }
         _ = delegate?.textView?(textView, shouldChangeTextIn: range, replacementText: text)
 
-        textView.typingAttributes = defaultTextAttributes.dictionary
+        textView.typingAttributes = defaultTextAttributes.dictionaryary
 
         var shouldChangeText = true
 
