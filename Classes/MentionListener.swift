@@ -21,6 +21,7 @@ public class MentionListener: NSObject {
      */
     internal weak var delegate: UITextViewDelegate?
 
+     public weak var externalDelegate: UITextViewDelegate?
     /**
      @brief Whether or not we should add a space after the mention, default: false
      */
@@ -336,6 +337,9 @@ extension MentionListener /* Private */ {
 extension MentionListener: UITextViewDelegate {
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange,
                          replacementText text: String) -> Bool {
+        if externalDelegate != nil {
+            self.externalDelegate?.textView?(textView, shouldChangeTextIn: range, replacementText: text)
+        }
         _ = delegate?.textView?(textView, shouldChangeTextIn: range, replacementText: text)
 
         textView.typingAttributes = defaultTextAttributes.dictionary
@@ -378,6 +382,9 @@ extension MentionListener: UITextViewDelegate {
 
     public func textViewDidChange(_ textView: UITextView) {
         delegate?.textViewDidChange?(textView)
+        if externalDelegate != nil {
+            externalDelegate?.textViewDidChange?(textView)
+        }
     }
 
     public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
@@ -390,6 +397,7 @@ extension MentionListener: UITextViewDelegate {
 
     public func textViewDidBeginEditing(_ textView: UITextView) {
         delegate?.textViewDidBeginEditing?(textView)
+
     }
 
     public func textViewDidChangeSelection(_ textView: UITextView) {
@@ -399,6 +407,9 @@ extension MentionListener: UITextViewDelegate {
 
     public func textViewDidEndEditing(_ textView: UITextView) {
         delegate?.textViewDidEndEditing?(textView)
+        if externalDelegate != nil {
+            externalDelegate?.textViewDidEndEditing?(textView)
+        }
     }
 
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
