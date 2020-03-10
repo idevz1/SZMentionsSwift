@@ -397,7 +397,9 @@ extension MentionListener: UITextViewDelegate {
 
     public func textViewDidBeginEditing(_ textView: UITextView) {
         delegate?.textViewDidBeginEditing?(textView)
-
+        if externalDelegate != nil {
+            externalDelegate?.textViewDidBeginEditing?(textView)
+        }
     }
 
     public func textViewDidChangeSelection(_ textView: UITextView) {
