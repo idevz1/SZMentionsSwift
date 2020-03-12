@@ -100,3 +100,18 @@ internal func add(_ mention: CreateMention,
         return (attributedText, NSRange(location: selectedRange.location + (spaceAfterMention ? 1 : 0), length: selectedRange.length))
     }
 }
+
+internal func addFakeMention(_ mention: CreateMention,
+                  spaceAfterMention: Bool,
+                  at range: NSRange,
+                  with attributes: @escaping (CreateMention?) -> [AttributeContainer])
+    -> (NSAttributedString) -> (NSAttributedString, NSRange) {
+    return { string in
+        var attributedText = string
+        let selectedRange: NSRange
+        (attributedText, selectedRange) = attributedText
+            |> replace(charactersIn: range, with: mention.mentionName(with: spaceAfterMention))
+
+        return (attributedText, NSRange(location: selectedRange.location + (spaceAfterMention ? 1 : 0), length: selectedRange.length))
+    }
+}

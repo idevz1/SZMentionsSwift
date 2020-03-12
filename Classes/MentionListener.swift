@@ -215,6 +215,24 @@ extension MentionListener /* Public */ {
 
         return true
     }
+    
+    @discardableResult public func addFakeMention(_ createMention: CreateMention) -> Bool {
+        guard currentMentionRange.location != NSNotFound else { return false }
+
+        let (text, selectedRange) = mentionsTextView.attributedText
+            |> SZMentionsSwift.addFakeMention(createMention, spaceAfterMention: spaceAfterMention, at: currentMentionRange, with: mentionTextAttributes)
+        mentionsTextView.attributedText = text
+        mentionsTextView.selectedRange = selectedRange
+
+        notifyOfTextViewChange(on: mentionsTextView)
+
+        mentionEnabled = false
+        filterString = ""
+        hideMentions()
+
+        return true
+    }
+
 }
 
 extension MentionListener /* Internal */ {
@@ -397,6 +415,7 @@ extension MentionListener: UITextViewDelegate {
 
     public func textViewDidBeginEditing(_ textView: UITextView) {
         delegate?.textViewDidBeginEditing?(textView)
+        print("marsj bro")
         if externalDelegate != nil {
             externalDelegate?.textViewDidBeginEditing?(textView)
         }
