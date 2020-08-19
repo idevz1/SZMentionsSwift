@@ -156,7 +156,7 @@ public class MentionListener: NSObject {
         self.hideMentions = hideMentions
         self.didHandleMentionOnReturn = didHandleMentionOnReturn
         self.showMentionsListWithString = showMentionsListWithString
-        self.mentionsTextView.typingAttributes = self.defaultTextAttributes.dictionaryary
+        self.mentionsTextView.typingAttributes = self.defaultTextAttributes.dictionary
         super.init()
         mentionsTextView.delegate = self
     }
@@ -170,7 +170,7 @@ extension MentionListener /* Public */ {
         mentions = []
 
         mentionsTextView.text = ""
-        mentionsTextView.typingAttributes = defaultTextAttributes.dictionaryary
+        mentionsTextView.typingAttributes = defaultTextAttributes.dictionary
     }
 
     /**
@@ -342,7 +342,7 @@ extension MentionListener /* Private */ {
                           selector: #selector(cooldownTimerFired(_:)), userInfo: nil,
                           repeats: false)
         cooldownTimer = timer
-        RunLoop.main.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
+        RunLoop.main.add(timer, forMode: RunLoop.Mode.default)
     }
 
     private func notifyOfTextViewChange(on textView: UITextView) {
@@ -360,7 +360,7 @@ extension MentionListener: UITextViewDelegate {
         }
         _ = delegate?.textView?(textView, shouldChangeTextIn: range, replacementText: text)
 
-        textView.typingAttributes = defaultTextAttributes.dictionaryary
+        textView.typingAttributes = defaultTextAttributes.dictionary
 
         var shouldChangeText = true
 
